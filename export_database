@@ -1,0 +1,2 @@
+mysqldump -h 10.29.9.2 -uqianliyan -pqianliyan --skip-lock-tables gov_stats > gov_stats.sql
+tar zcf gov_stats.sql.tar.gz gov_stats.sql
