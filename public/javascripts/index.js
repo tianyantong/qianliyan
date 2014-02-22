@@ -2,7 +2,7 @@ var margin = {top: 20, right: 80, bottom: 30, left: 50},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-var parseDate = d3.time.format("%Y%m%d").parse;
+var parseDate = d3.time.format("%Y%m").parse;
 
 var x = d3.time.scale()
     .range([0, width]);
@@ -31,7 +31,7 @@ var svg = d3.select("body").append("svg")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.tsv("data.tsv", function(error, data) {
+d3.json("data", function(error, data) {
     color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
 
     data.forEach(function(d) {
@@ -42,7 +42,7 @@ d3.tsv("data.tsv", function(error, data) {
         return {
             name: name,
             values: data.map(function(d) {
-                return {date: d.date, temperature: +d[name]};
+                return {date: d.date, temperature: d.value};
             })
         };
     });
