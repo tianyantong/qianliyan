@@ -65,16 +65,52 @@ module.exports = function(grunt) {
       lib_test: {
         files: '<%= jshint.lib_test.src %>',
         tasks: ['jshint:lib_test', 'nodeunit']
+      },
+      express: {
+        files:  [ 'routes/*.js', 'public/javascripts/**/*.js' ],
+        tasks:  [ 'express:dev' ],
+        options: {
+          spawn: false // for grunt-contrib-watch v0.5.0+, "nospawn: true" for lower versions. Without this option specified express won't be reloaded
+        }
       }
     },
     coffee: {
-      glob_to_multiple: {
+      routes: {
         expand: true,
         flatten: true,
         cwd: 'routes/',
         src: ['*.coffee'],
         dest: 'routes/',
         ext: '.js'
+      },
+      main: {
+        expand: true,
+        flatten: true,
+        cwd: 'public/javascripts',
+        src: ['*.coffee'],
+        dest: 'public/javascripts',
+        ext: '.js'
+      }
+    },
+    express: {
+      options: {
+        // Override defaults here
+      },
+      dev: {
+        options: {
+          script: 'app.js'
+        }
+      },
+      prod: {
+        options: {
+          script: 'path/to/prod/server.js',
+          node_env: 'production'
+        }
+      },
+      test: {
+        options: {
+          script: 'path/to/test/server.js'
+        }
       }
     }
   });
@@ -88,8 +124,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-coffee');
+  grunt.loadNpmTasks('grunt-express-server');
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'coffee', 'nodeunit', 'concat', 'uglify']);
+  grunt.registerTask('s', [ 'express:dev', 'watch' ])
 
 };

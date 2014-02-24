@@ -1,2 +1,3 @@
 .idea/
 routes/*.js
+public/javascripts/*.js
