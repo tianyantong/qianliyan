@@ -128,6 +128,6 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'coffee', 'nodeunit', 'concat', 'uglify']);
-  grunt.registerTask('s', [ 'express:dev', 'watch' ])
+  grunt.registerTask('s', [ 'coffee', 'express:dev', 'watch' ])
 
 };
