@@ -1,11 +1,11 @@
 margin =
   top: 20
-  right: 80
+  right: 280
   bottom: 30
   left: 50
 
-width = 960 - margin.left - margin.right
-height = 500 - margin.top - margin.bottom
+width = 1280 - margin.left - margin.right
+height = 600 - margin.top - margin.bottom
 parseDate = d3.time.format("%Y%m").parse
 x = d3.time.scale().range([
   0
@@ -25,14 +25,14 @@ line = d3.svg.line().interpolate("basis").x((d) ->
 )
 svg = d3.select("body").append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 d3.json "data", (error, data) ->
-  color.domain ['A200101']
+  color.domain ['A190110','A190109']
   data.forEach (d) ->
     d.date = parseDate(d.date)
     return
 
   cities = color.domain().map((name) ->
-    name: name
-    values: data.map((d) ->
+    name: data.filter((d) -> d.index == name)[0].name,
+    values: data.filter((d) -> d.index == name).map((d) ->
       date: d.date
       value: d.value
     )
