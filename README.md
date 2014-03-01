@@ -3,8 +3,8 @@
 ```
 grunt s
 
-//start a node server with monitor
-nodemon app.js $
+//start a node server on staging
+node app.js &
 fg
 ```
 
